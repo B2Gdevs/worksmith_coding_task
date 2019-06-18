@@ -70,13 +70,13 @@ def dispense_coins(money_input: float, coins: list) -> defaultdict:
     return totals
 
 
-def get_args(args: str):
+def get_args(args: list) -> argparse.Namespace:
     """
     Get arguments from command line.
 
     Parameters
     ----------
-    args: str
+    args: list
         Arguments passed to the program from the commandline.
 
     """
@@ -91,11 +91,24 @@ def get_args(args: str):
     return args
 
 
-def main():
-    """Script entry point."""
-    args = get_args(sys.argv[1:])
+def extend_coins(coins, args):
+    """
+    Extend the default coins with new coins to dispense.
 
-    coins = [.25, .10, .05, .01]
+    Parameters
+    ----------
+    coins: list
+        The list of default coins.  [.25, .10, .05, .01]
+    args: argparse.Namespace
+        The arguments from argparse after the commandline arguments have been
+        passed.
+
+    Returns
+    -------
+    list:
+        The list of coins that may have had optional arguments passed to them
+        and added to the list of coins.
+    """
 
     if args.add:
         coins.append(args.add)
@@ -105,6 +118,9 @@ def main():
             # ast.literal_eval will evaluate the string datatype to literal
             # python datatype.  Then coins will add each item to itself.
             coins.extend(ast.literal_eval(args.addlist))
+
+            # filter out strings that do not evalute to ints or floats
+            coins = list(filter(lambda x: type(x) != str, coins))
         except SyntaxError:
             print("\nInvalid Argument: {} is not a valid datatype.  Try "
                   "something similar to [.4,.3] next time, ignoring argument "
@@ -112,6 +128,17 @@ def main():
 
     # sorted uses a timsort so it will be faster than what I come up with.
     coins = sorted(coins, reverse=True)
+
+    return coins
+
+
+def main():
+    """Script entry point."""
+    args = get_args(sys.argv[1:])
+
+    coins = [.25, .10, .05, .01]
+
+    coins = extend_coins(coins, args)
     money_input = get_input()
     totals_dict = dispense_coins(money_input, coins)
 
