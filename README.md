@@ -1,5 +1,5 @@
 # Worksmith Coding Task
-https://travis-ci.org/B2Gdevs/worksmith_coding_task.svg?branch=master
+[![Build Status](https://travis-ci.org/B2Gdevs/worksmith_coding_task.svg?branch=master)](https://travis-ci.org/B2Gdevs/worksmith_coding_task)
 
 You’re tasked with creating a program for making change. Your program should take as
 an input the amount of change to make (e.g. 4.50), and it should output the number of
