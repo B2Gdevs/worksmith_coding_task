@@ -25,7 +25,18 @@ python dispense_change.py --add .7
 ```
 
 ### Adding multiple numbers
-The ```--add``` argument will only add one numerical value.
+The ```--addlist``` argument will take a composite datatype and similar to a list or tuple 
+then it will extend the coin list.
 ```
-python dispense_change.py --add .7
+python dispense_change.py --addlist [.7, .1, .3]
 ```
+
+Both arguments can be used at the same time.
+```
+python dispense_change.py --addlist [.7, .1, .3] --add .15
+```
+
+### Information
+The program will truncate long real numbers to the 2nd decimal place.  So the lowest number that can be added to the list
+is already added by default since that is 0.01.  However, the inverse isn't constrained.  The positive value can continue to go up.
+The reason being that I have been to japan where it was common to use a 500 yen coin which would be 5 dollars.
